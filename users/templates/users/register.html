@@ -1,0 +1,20 @@
+{% extends 'client/base.html' %}
+
+{% block products %}
+    <div class="row text-center">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="btn btn-success">
+                        Регистрация
+                    </button>
+                    <a href="{% url 'mail:mail_list' %}" class="btn btn-secondary">Отмена</a>
+                </form>
+                <h2></h2>
+                <h4>На почту будет отправлено письмо с подтверждением</h4>
+            </div>
+        </div>
+    </div>
+{% endblock %}

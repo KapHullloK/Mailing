@@ -1,0 +1,40 @@
+{% extends 'client/base.html' %}
+
+
+{% block products %}
+    <div class="row text-center">
+        <div class="mb-4 text-end">
+            <a href="{% url 'mail:mail_create' %}" class="btn btn-success">Добавить рассылку</a>
+        </div>
+        {% for mail in mails %}
+            <div class="col-6">
+                <div class="card mb-4 box-shadow">
+                    <div class="card-header">
+                        <h4 class="my-0 font-weight-normal">{{ mail.message.topic }}</h4>
+                        {% if user != mail.owner %}
+                            <h5 class="my-0 font-weight-normal">{{ mail.owner.email }}</h5>
+                        {% endif %}
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-unstyled mt-3 mb-4 text-start m-3">
+                            <li>mailing will begin at: {{ mail.time_for_sending }}</li>
+                            <li>every {{ mail.periodicity }}</li>
+                            <li>status: {{ mail.status }}</li>
+                            <li>sent: {{ mail.recipients.count }}</li>
+                            <li>unsent: {{ mail.attempt.count }}</li>
+                            <li>active: {{ mail.is_active }}</li>
+                        </ul>
+                        <div class="d-flex justify-content-between">
+                            <a href="{% url 'mail:mail_update' mail.pk %}" class="btn btn-info">
+                                Изменить рассылку
+                            </a>
+                            <a href="{% url 'mail:mail_delete' mail.pk %}" class="btn btn-primary">
+                                Удалить рассылку
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

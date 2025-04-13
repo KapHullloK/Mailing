@@ -1,0 +1,26 @@
+{% extends 'client/base.html' %}
+
+
+{% block products %}
+    <div class="row text-center">
+        {% for user in users %}
+            <div class="col-6">
+                <div class="card mb-4 box-shadow">
+                    <div class="card-header">
+                        <h4 class="my-0 font-weight-normal">{{ user.email }}</h4>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-unstyled mt-3 mb-4 text-start m-3">
+                            <li>Количество созданных рассылок: {{ user.mail_count }}</li>
+                        </ul>
+                        <div class="d-flex justify-content-between">
+                            <a href="{% url 'users:ban_user' user.pk %}" class="btn btn-info">
+                                Заблокировать пользовотеля
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
