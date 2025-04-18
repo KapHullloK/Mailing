@@ -1,0 +1,24 @@
+{% extends 'client/base.html' %}
+
+
+{% block products %}
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h2 class="card-title">{{ messages.topic }}</h2>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <p>Message: {{ messages.message }}</p>
+                            <a href="{% url 'message:message_update' messages.pk %}"
+                               class="btn btn-warning btn-sm">Обновить</a>
+                            <a href="{% url 'message:message_delete' messages.pk %}"
+                               class="btn btn-danger btn-sm">Удалить</a>
+                        </div>
+                    </div>
+                </div>
+                <a href="{% url 'message:message_list' %}" class="btn btn-info btn-sm">Назад</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

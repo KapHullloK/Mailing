@@ -8,26 +8,29 @@
         </div>
         {% for message in messages %}
             <div class="col-6">
-                {% if user == message.owner or user.is_superuser %}
-                    <div class="card mb-4 box-shadow">
-                        <div class="card-header">
-                            <h4 class="my-0 font-weight-normal">{{ message.topic }}</h4>
-                        </div>
-                        <div class="card-body">
-                            <ul class="list-unstyled mt-3 mb-4 text-start m-3">
-                                <li>{{ message.message }}</li>
-                            </ul>
-                            <div class="d-flex justify-content-between">
-                                <a href="{% url 'message:message_update' message.pk %}" class="btn btn-info">
-                                    Изменить сообщение
-                                </a>
-                                <a href="{% url 'message:message_delete' message.pk %}" class="btn btn-primary">
-                                    Удалить сообщение
-                                </a>
-                            </div>
+
+                <div class="card mb-4 box-shadow">
+                    <div class="card-header">
+                        <h4 class="my-0 font-weight-normal">{{ message.topic }}</h4>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-unstyled mt-3 mb-4 text-start m-3">
+                            <li>{{ message.message }}</li>
+                        </ul>
+                        <div class="d-flex justify-content-between">
+                            <a href="{% url 'message:message_update' message.pk %}" class="btn btn-info">
+                                Изменить сообщение
+                            </a>
+                            <a href="{% url 'message:message_delete' message.pk %}" class="btn btn-primary">
+                                Удалить сообщение
+                            </a>
+                            <a href="{% url 'message:message_more' message.pk %}" class="btn btn-primary">
+                                Подробнее
+                            </a>
                         </div>
                     </div>
-                {% endif %}
+                </div>
+
             </div>
         {% endfor %}
     </div>

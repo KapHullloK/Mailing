@@ -1,0 +1,25 @@
+{% extends 'client/base.html' %}
+
+
+{% block products %}
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h2 class="card-title">{{ client.email }}</h2>
+                    <p class="card-text">Name: {{ client.full_name }}</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <p>Comment: {{ client.comment }}</p>
+                            <a href="{% url 'clients:clients_update' client.pk %}"
+                               class="btn btn-warning btn-sm">Обновить</a>
+                            <a href="{% url 'clients:clients_delete' client.pk %}"
+                               class="btn btn-danger btn-sm">Удалить</a>
+                        </div>
+                    </div>
+                </div>
+                <a href="{% url 'clients:clients_list' %}" class="btn btn-info btn-sm">Назад</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

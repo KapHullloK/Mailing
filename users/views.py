@@ -1,3 +1,4 @@
+from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.core.mail import send_mail
 from django.db.models import Count
@@ -6,7 +7,7 @@ from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, ListView, UpdateView
 
 from Mailing.settings import EMAIL_HOST_USER
-from users.forms import UserRegistrationForm, UserForm
+from users.forms import UserRegistrationForm, UserBanForm, UserProfileForm
 from users.models import User
 
 import secrets
@@ -60,11 +61,29 @@ class UserListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
         )
 
 
-class UserUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+class UserBanView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = User
-    form_class = UserForm
+    form_class = UserBanForm
     success_url = reverse_lazy('users:list_users')
 
     def test_func(self):
         user = self.request.user
         return user.is_superuser or user.groups.filter(name='Managers').exists()
+
+
+class UserProfileView(LoginRequiredMixin, UpdateView):
+    model = User
+    form_class = UserProfileForm
+    template_name = 'users/user_profile.html'
+
+    def get_success_url(self):
+        return reverse_lazy('users:profile_user', kwargs={'pk': self.object.pk})
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+
+        new_password = form.cleaned_data.get('new_password')
+        if new_password:
+            update_session_auth_hash(self.request, self.object)
+
+        return response

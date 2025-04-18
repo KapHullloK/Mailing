@@ -6,13 +6,45 @@ from client.models import Client, Message, Mail
 class ClientForm(forms.ModelForm):
     class Meta:
         model = Client
-        fields = '__all__'
+        exclude = ['owner']
+        widgets = {
+            'email': forms.EmailInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Enter email address'
+            }),
+            'full_name': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Enter full name'
+            }),
+            'comment': forms.Textarea(attrs={
+                'class': 'form-control',
+                'placeholder': 'Add a comment (optional)',
+                'rows': 4
+            }),
+            'owner': forms.Select(attrs={
+                'class': 'form-select'
+            }),
+        }
 
 
 class MessageForm(forms.ModelForm):
     class Meta:
         model = Message
-        fields = '__all__'
+        exclude = ['owner']
+        widgets = {
+            'topic': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Enter the topic of the message'
+            }),
+            'message': forms.Textarea(attrs={
+                'class': 'form-control',
+                'placeholder': 'Write your message here...',
+                'rows': 6
+            }),
+            'owner': forms.Select(attrs={
+                'class': 'form-select'
+            }),
+        }
 
 
 class MailForm(forms.ModelForm):

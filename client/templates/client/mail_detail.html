@@ -1,0 +1,29 @@
+{% extends 'client/base.html' %}
+
+
+{% block products %}
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h2 class="card-title">{{ mails.owner.email }}</h2>
+                    <p class="card-text">Topic: {{ mails.message.topic }}</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <p>Next time for sending: {{ mails.time_for_sending }}</p>
+                            <p>Periodicity: {{ mails.periodicity }}</p>
+                            <p>Quantity clients: {{ mails.recipients.count }}</p>
+                            <p>Status: {{ mails.status }}</p>
+                            <p>Active: {{ mails.is_active }}</p>
+                            <a href="{% url 'mail:mail_update' mails.pk %}"
+                               class="btn btn-warning btn-sm">Обновить</a>
+                            <a href="{% url 'mail:mail_delete' mails.pk %}"
+                               class="btn btn-danger btn-sm">Удалить</a>
+                        </div>
+                    </div>
+                </div>
+                <a href="{% url 'mail:mail_list' %}" class="btn btn-info btn-sm">Назад</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

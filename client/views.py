@@ -1,7 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
 from django.urls import reverse_lazy
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
 
 from client.forms import ClientForm, MessageForm, MailForm, MailManagerForm
 from client.models import Client, Message, Mail
@@ -10,6 +10,20 @@ from client.models import Client, Message, Mail
 class ClientListView(LoginRequiredMixin, ListView):
     model = Client
     context_object_name = 'clients'
+    login_url = reverse_lazy('users:login')
+
+    def get_queryset(self):
+        user = self.request.user
+
+        if user.is_superuser or user.groups.filter(name='Managers').exists():
+            return Client.objects.all()
+
+        return Client.objects.filter(owner=user)
+
+
+class ClientDetailView(LoginRequiredMixin, DetailView):
+    model = Client
+    context_object_name = 'client'
     login_url = reverse_lazy('users:login')
 
 
@@ -47,6 +61,20 @@ class MessageListView(LoginRequiredMixin, ListView):
 
         return context
 
+    def get_queryset(self):
+        user = self.request.user
+
+        if user.is_superuser or user.groups.filter(name='Managers').exists():
+            return Message.objects.all()
+
+        return Message.objects.filter(owner=user)
+
+
+class MessageDetailView(LoginRequiredMixin, DetailView):
+    model = Message
+    context_object_name = 'messages'
+    login_url = reverse_lazy('users:login')
+
 
 class MessageCreateView(LoginRequiredMixin, CreateView):
     model = Message
@@ -81,6 +109,12 @@ class MailListView(LoginRequiredMixin, ListView):
             return Mail.objects.all()
 
         return Mail.objects.filter(owner=user)
+
+
+class MailDetailView(LoginRequiredMixin, DetailView):
+    model = Mail
+    context_object_name = 'mails'
+    login_url = reverse_lazy('users:login')
 
 
 class MailCreateView(LoginRequiredMixin, CreateView):

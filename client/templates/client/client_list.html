@@ -8,27 +8,30 @@
         </div>
         {% for client in clients %}
             <div class="col-6">
-                {% if user == client.owner or user.is_superuser %}
-                    <div class="card mb-4 box-shadow">
-                        <div class="card-header">
-                            <h4 class="my-0 font-weight-normal">{{ client.full_name }}</h4>
-                            <h4 class="my-0 font-weight-normal">{{ client.email }}</h4>
-                        </div>
-                        <div class="card-body">
-                            <ul class="list-unstyled mt-3 mb-4 text-start m-3">
-                                <li>{{ client.comment }}</li>
-                            </ul>
-                            <div class="d-flex justify-content-between">
-                                <a href="{% url 'clients:clients_update' client.pk %}" class="btn btn-info">
-                                    Изменить клиента
-                                </a>
-                                <a href="{% url 'clients:clients_delete' client.pk %}" class="btn btn-primary">
-                                    Удалить клиента
-                                </a>
-                            </div>
+
+                <div class="card mb-4 box-shadow">
+                    <div class="card-header">
+                        <h4 class="my-0 font-weight-normal">{{ client.full_name }}</h4>
+                        <h4 class="my-0 font-weight-normal">{{ client.email }}</h4>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-unstyled mt-3 mb-4 text-start m-3">
+                            <li>{{ client.comment }}</li>
+                        </ul>
+                        <div class="d-flex justify-content-between">
+                            <a href="{% url 'clients:clients_update' client.pk %}" class="btn btn-info">
+                                Изменить клиента
+                            </a>
+                            <a href="{% url 'clients:clients_delete' client.pk %}" class="btn btn-primary">
+                                Удалить клиента
+                            </a>
+                            <a href="{% url 'clients:clients_more' client.pk %}" class="btn btn-primary">
+                                Подробнее
+                            </a>
                         </div>
                     </div>
-                {% endif %}
+                </div>
+
             </div>
         {% endfor %}
     </div>

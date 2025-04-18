@@ -2,7 +2,7 @@ from django.urls import path
 from django.views.decorators.cache import cache_page
 
 from client.apps import ClientConfig
-from client.views import MessageListView, MessageCreateView, MessageUpdateView, MessageDeleteView
+from client.views import MessageListView, MessageCreateView, MessageUpdateView, MessageDeleteView, MessageDetailView
 
 app_name = ClientConfig.name
 
@@ -11,4 +11,5 @@ urlpatterns = [
     path('create/', MessageCreateView.as_view(), name='message_create'),
     path('update/<int:pk>', MessageUpdateView.as_view(), name='message_update'),
     path('delete/<int:pk>', MessageDeleteView.as_view(), name='message_delete'),
+    path('more/<int:pk>', MessageDetailView.as_view(), name='message_more'),
 ]

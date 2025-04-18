@@ -62,7 +62,7 @@ class HomePageView(TemplateView):
         total_mailings = mails_list.count()
         active_mailings = mails_list.filter(is_active=True).count()
         unique_clients = clients_list.count()
-        last_blogs = Blog.objects.filter(is_active=True)[:3]
+        last_blogs = Blog.objects.filter(is_active=True).order_by("?")[:3]
 
         context['total_mailings'] = total_mailings
         context['active_mailings'] = active_mailings
